@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Security;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace SCIApp
 {
@@ -19,7 +20,6 @@ namespace SCIApp
             try
             {
                 connection = new SqlConnection(_ConnectionString);
-                MessageBox.Show("Conexión establecida satisfactoriamente", "Estado de Conexión");
             }
             catch (Exception ex)
             {
@@ -32,7 +32,7 @@ namespace SCIApp
             return "Data Source=localhost; Initial Catalog=novenaDB; Integrated Security=True; TrustServerCertificate=true";
         }
 
-        public bool LogInSystem(string user, string password)
+        public int LogInSystem(string user, string password)
         {
             try
             {
@@ -45,8 +45,7 @@ namespace SCIApp
 
                 if (dr.Read())
                 {
-                    MessageBox.Show("Sesión iniciada...", "Inicio de Sesión");
-                    return true;
+                    return dr.GetInt32(0);
                 }
             }
             catch (Exception ex)
@@ -54,8 +53,7 @@ namespace SCIApp
                 MessageBox.Show(ex.Message, "Error");
             }
             finally { connection.Close(); }
-
-            return false;
+            return 0;
         }
 
         public void InsertItem(Especie Item)
@@ -85,6 +83,63 @@ namespace SCIApp
             finally { connection.Close(); }
         }
 
+        public void getItems(DataGridView dg)
+        {
+            try
+            {
+                connection.Open();
+                string cmd = "SELECT * from inventario";
+                SqlDataAdapter data = new SqlDataAdapter(cmd, connection);
+                DataTable dt = new DataTable();
+                data.Fill(dt);
+                dg.DataSource = dt;
+
+            }
+            catch (Exception ex ) 
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+            finally { connection.Close(); }
+        }
+        public void getItemsBySearch(DataGridView dg, string dep, string ubi, string desc)
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand sql = new SqlCommand("db_srcItem", connection);
+                sql.CommandType = CommandType.StoredProcedure;
+                sql.Parameters.AddWithValue("@desc", desc);
+
+                if (dep != "Todo")
+                {
+                    sql.Parameters.AddWithValue("@depen", dep);
+                }
+                if (ubi != "Todo")
+                {
+                    sql.Parameters.AddWithValue("@ubic", ubi);
+
+                }
+                if (dep == "Todo")
+                {
+                    sql.Parameters.AddWithValue("@depen", "");
+                }
+                if (ubi == "Todo")
+                {
+                    sql.Parameters.AddWithValue("@ubic", "");
+                }
+                SqlDataAdapter data = new SqlDataAdapter(sql);
+                DataTable dt = new DataTable();
+                data.Fill(dt);
+                dg.DataSource = dt;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+            finally { connection.Close(); }
+
+        }
 
     }
 }

@@ -12,19 +12,24 @@ namespace SCIApp
 {
     public partial class inventory_insert : Form
     {
-        Especie[] items = new Especie[1];
+        Connection con = new Connection();
+        Especie[] items = new Especie[0];
         string[] dependencias = { "Sala de Estar", "Comedor", "Baños", "Cocina", "Bodega", "B-9"};
-        public inventory_insert()
+        DataGridView indexdg;
+        public inventory_insert(DataGridView dg)
         {
             InitializeComponent();
             cb_dependency.Items.AddRange(dependencias);
+            indexdg= dg;
 
         }
 
         private void btn_AddItem_Click(object sender, EventArgs e)
         {
+            Array.Resize(ref items, items.Length + 1);
+
             int _lastItem = items.Length - 1;
-            items[_lastItem] = new Especie(inp_itemCode.Text, inp_desc.Text, int.Parse(inp_qty.Text), cb_location.Text, cb_dependency.Text);
+            items[_lastItem] = new Especie(inp_itemCode.Text, inp_desc.Text, inp_qty.Text, cb_location.Text, cb_dependency.Text);
             if(inp_brand.Text != "")
             {
                 items[_lastItem].brand = inp_brand.Text;
@@ -33,7 +38,10 @@ namespace SCIApp
             {
                 items[_lastItem].model = inp_model.Text;
             }
-            Array.Resize(ref items, items.Length + 1);
+
+            tbl_ItemList.Rows.Add(items[_lastItem].getParams());
+
+            clear_texboxes();
         }
 
         private void cb_dependency_SelectedIndexChanged(object sender, EventArgs e)
@@ -48,6 +56,29 @@ namespace SCIApp
                 cb_location.Items.Clear();
                 cb_location.Items.Add(Locations.getLocGen().ToString());
             }
+        }
+
+        private void clear_texboxes()
+        {
+            inp_itemCode.Clear();
+            inp_desc.Clear();
+            inp_brand.Clear();
+            inp_model.Clear();
+            inp_qty.Clear();
+        }
+
+        private void btn_InsertAll_Click(object sender, EventArgs e)
+        {
+            foreach (Especie item in items)
+            {
+                con.InsertItem(item);
+            }
+        }
+
+        private void btn_back_Click(object sender, EventArgs e)
+        {
+            con.getItems(indexdg);
+            this.Close();
         }
     }
 }

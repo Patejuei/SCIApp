@@ -7,21 +7,67 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SpreadsheetLight;
 
 namespace SCIApp
 {
     public partial class inventory_index : Form
     {
+        Connection connection;
         public inventory_index()
         {
             InitializeComponent();
+            connection= new Connection();
+            connection.getItems(tbl_items);
+            cb_DepSrc.Items.AddRange(Locations.dependencias);
         }
 
         private void btn_InsertItem_Index_Click(object sender, EventArgs e)
         {
-            inventory_insert ins = new inventory_insert();
+            inventory_insert ins = new inventory_insert(tbl_items);
             ins.ShowDialog();
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //Abre la ventana para elegir la ruta de guardado.
+            SaveFileDialog _pathFile = new SaveFileDialog();
+            _pathFile.Title = "Guardar Planilla";
+            _pathFile.Filter = "Planilla Excel (*.xls)|*.xls|Todos los Archivos (*.*)|*.*";
+            _pathFile.FileName = "Inventario Fecha " + DateTime.Now.ToString();
+            _pathFile.ShowDialog();
+
+            //Genera la planilla para guardarla
+            SLDocument Documento = new SLDocument();
+
+            Table tabla= new Table();
+
+
+        }
+
+        private void tb_busqueda_TextChanged(object sender, EventArgs e)
+        {
+            connection.getItemsBySearch(tbl_items, cb_DepSrc.Text, cb_UbiSrc.Text, tb_busqueda.Text);
+        }
+
+        private void cb_DepSrc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cb_DepSrc.Text == "B-9")
+            {
+                cb_UbiSrc.Items.Clear();
+                cb_UbiSrc.Items.AddRange(Locations.getLocB9());
+            }
+            else
+            {
+                cb_UbiSrc.Items.Clear();
+                cb_UbiSrc.Items.Add(Locations.getLocGen().ToString());
+            }
+            connection.getItemsBySearch(tbl_items, cb_DepSrc.Text, cb_UbiSrc.Text,tb_busqueda.Text);
+        }
+
+        private void cb_UbiSrc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            connection.getItemsBySearch(tbl_items, cb_DepSrc.Text, cb_UbiSrc.Text, tb_busqueda.Text);
+        }
     }
 }

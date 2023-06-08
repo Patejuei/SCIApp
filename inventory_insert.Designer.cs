@@ -44,11 +44,20 @@
             this.inp_qty = new System.Windows.Forms.TextBox();
             this.inp_itemCode = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.treeView1 = new System.Windows.Forms.TreeView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btn_InsertAll = new System.Windows.Forms.Button();
+            this.tbl_ItemList = new System.Windows.Forms.DataGridView();
+            this.iCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iBrand = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iModel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iDep = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iLoc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btn_back = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbl_ItemList)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -70,7 +79,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(466, 192);
+            this.groupBox1.Size = new System.Drawing.Size(468, 192);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de Ingreso";
@@ -99,14 +108,14 @@
             this.inp_model.Location = new System.Drawing.Point(137, 152);
             this.inp_model.Name = "inp_model";
             this.inp_model.Size = new System.Drawing.Size(125, 27);
-            this.inp_model.TabIndex = 1;
+            this.inp_model.TabIndex = 7;
             // 
             // inp_brand
             // 
             this.inp_brand.Location = new System.Drawing.Point(6, 152);
             this.inp_brand.Name = "inp_brand";
             this.inp_brand.Size = new System.Drawing.Size(125, 27);
-            this.inp_brand.TabIndex = 1;
+            this.inp_brand.TabIndex = 6;
             // 
             // label6
             // 
@@ -122,7 +131,7 @@
             this.inp_desc.Location = new System.Drawing.Point(6, 99);
             this.inp_desc.Name = "inp_desc";
             this.inp_desc.Size = new System.Drawing.Size(451, 27);
-            this.inp_desc.TabIndex = 1;
+            this.inp_desc.TabIndex = 5;
             // 
             // label5
             // 
@@ -136,7 +145,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(337, 23);
+            this.label4.Location = new System.Drawing.Point(337, 22);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(75, 20);
             this.label4.TabIndex = 5;
@@ -154,10 +163,10 @@
             // cb_location
             // 
             this.cb_location.FormattingEnabled = true;
-            this.cb_location.Location = new System.Drawing.Point(337, 46);
+            this.cb_location.Location = new System.Drawing.Point(337, 45);
             this.cb_location.Name = "cb_location";
             this.cb_location.Size = new System.Drawing.Size(120, 28);
-            this.cb_location.TabIndex = 3;
+            this.cb_location.TabIndex = 4;
             // 
             // cb_dependency
             // 
@@ -182,7 +191,7 @@
             this.inp_qty.Location = new System.Drawing.Point(108, 46);
             this.inp_qty.Name = "inp_qty";
             this.inp_qty.Size = new System.Drawing.Size(97, 27);
-            this.inp_qty.TabIndex = 1;
+            this.inp_qty.TabIndex = 2;
             // 
             // inp_itemCode
             // 
@@ -201,17 +210,11 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Código";
             // 
-            // treeView1
-            // 
-            this.treeView1.Location = new System.Drawing.Point(12, 210);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(654, 228);
-            this.treeView1.TabIndex = 1;
-            // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btn_back);
             this.groupBox2.Controls.Add(this.btn_InsertAll);
-            this.groupBox2.Location = new System.Drawing.Point(484, 12);
+            this.groupBox2.Location = new System.Drawing.Point(486, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(182, 192);
             this.groupBox2.TabIndex = 2;
@@ -226,20 +229,115 @@
             this.btn_InsertAll.TabIndex = 0;
             this.btn_InsertAll.Text = "Ingresar Items";
             this.btn_InsertAll.UseVisualStyleBackColor = true;
+            this.btn_InsertAll.Click += new System.EventHandler(this.btn_InsertAll_Click);
+            // 
+            // tbl_ItemList
+            // 
+            this.tbl_ItemList.AllowUserToAddRows = false;
+            this.tbl_ItemList.AllowUserToDeleteRows = false;
+            this.tbl_ItemList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tbl_ItemList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.iCode,
+            this.iDesc,
+            this.iBrand,
+            this.iModel,
+            this.iQty,
+            this.iDep,
+            this.iLoc});
+            this.tbl_ItemList.Location = new System.Drawing.Point(12, 210);
+            this.tbl_ItemList.Name = "tbl_ItemList";
+            this.tbl_ItemList.ReadOnly = true;
+            this.tbl_ItemList.RowHeadersWidth = 51;
+            this.tbl_ItemList.RowTemplate.Height = 29;
+            this.tbl_ItemList.Size = new System.Drawing.Size(928, 313);
+            this.tbl_ItemList.TabIndex = 3;
+            // 
+            // iCode
+            // 
+            this.iCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.iCode.HeaderText = "Codigo";
+            this.iCode.MinimumWidth = 6;
+            this.iCode.Name = "iCode";
+            this.iCode.ReadOnly = true;
+            this.iCode.Width = 87;
+            // 
+            // iDesc
+            // 
+            this.iDesc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.iDesc.HeaderText = "Detalle";
+            this.iDesc.MinimumWidth = 6;
+            this.iDesc.Name = "iDesc";
+            this.iDesc.ReadOnly = true;
+            this.iDesc.Width = 86;
+            // 
+            // iBrand
+            // 
+            this.iBrand.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.iBrand.HeaderText = "Marca";
+            this.iBrand.MinimumWidth = 6;
+            this.iBrand.Name = "iBrand";
+            this.iBrand.ReadOnly = true;
+            this.iBrand.Width = 79;
+            // 
+            // iModel
+            // 
+            this.iModel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.iModel.HeaderText = "Modelo";
+            this.iModel.MinimumWidth = 6;
+            this.iModel.Name = "iModel";
+            this.iModel.ReadOnly = true;
+            this.iModel.Width = 90;
+            // 
+            // iQty
+            // 
+            this.iQty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.iQty.HeaderText = "Cantidad";
+            this.iQty.MinimumWidth = 6;
+            this.iQty.Name = "iQty";
+            this.iQty.ReadOnly = true;
+            this.iQty.Width = 98;
+            // 
+            // iDep
+            // 
+            this.iDep.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.iDep.HeaderText = "Dependencia";
+            this.iDep.MinimumWidth = 6;
+            this.iDep.Name = "iDep";
+            this.iDep.ReadOnly = true;
+            this.iDep.Width = 126;
+            // 
+            // iLoc
+            // 
+            this.iLoc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.iLoc.HeaderText = "Ubicacion";
+            this.iLoc.MinimumWidth = 6;
+            this.iLoc.Name = "iLoc";
+            this.iLoc.ReadOnly = true;
+            // 
+            // btn_back
+            // 
+            this.btn_back.Location = new System.Drawing.Point(6, 61);
+            this.btn_back.Name = "btn_back";
+            this.btn_back.Size = new System.Drawing.Size(170, 29);
+            this.btn_back.TabIndex = 1;
+            this.btn_back.Text = "Volver";
+            this.btn_back.UseVisualStyleBackColor = true;
+            this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
             // 
             // inventory_insert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(680, 450);
+            this.ClientSize = new System.Drawing.Size(954, 535);
+            this.Controls.Add(this.tbl_ItemList);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.treeView1);
             this.Controls.Add(this.groupBox1);
             this.Name = "inventory_insert";
             this.Text = "Insertar Especie";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tbl_ItemList)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -262,8 +360,16 @@
         private TextBox inp_qty;
         private TextBox inp_itemCode;
         private Label label1;
-        private TreeView treeView1;
         private GroupBox groupBox2;
         private Button btn_InsertAll;
+        private DataGridView tbl_ItemList;
+        private DataGridViewTextBoxColumn iCode;
+        private DataGridViewTextBoxColumn iDesc;
+        private DataGridViewTextBoxColumn iBrand;
+        private DataGridViewTextBoxColumn iModel;
+        private DataGridViewTextBoxColumn iQty;
+        private DataGridViewTextBoxColumn iDep;
+        private DataGridViewTextBoxColumn iLoc;
+        private Button btn_back;
     }
 }
