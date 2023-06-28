@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SCIApp
+namespace SCIApp.Models
 {
     internal class Locations
     {
-        private static string _Estructure = "N/A";
-        private static string[] _B9 = {"Todo", "Cabina", "Contra-Cabina", "Cortina 1", "Cortina 2", "Cortina 3", "Cortina 4", "Techo" };
-        public static string[] dependencias = {"Todo", "Sala de Estar", "Comedor", "Baños", "Cocina", "Bodega", "B-9" };
+        private static string _Estructure = "N/A" ;
+        private static string[] _B9 = { "Cabina", "Contra-Cabina", "Cortina 1", "Cortina 2", "Cortina 3", "Cortina 4", "Techo" };
+        public static string[] _dependencias = { "Sala de Estar", "Comedor", "Baños", "Cocina", "Bodega", "B-9" };
 
         public static string[] getLocB9()
         {
@@ -20,5 +20,7 @@ namespace SCIApp
         {
             return _Estructure;
         }
+
+
     }
 }

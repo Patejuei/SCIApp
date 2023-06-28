@@ -69,6 +69,7 @@
             this.inp_pass.PasswordChar = '*';
             this.inp_pass.Size = new System.Drawing.Size(231, 27);
             this.inp_pass.TabIndex = 3;
+            this.inp_pass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.inp_pass_KeyPress);
             // 
             // btn_login
             // 

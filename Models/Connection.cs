@@ -7,12 +7,13 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Security;
 using DocumentFormat.OpenXml.Spreadsheet;
+using SCIApp.Models;
 
 namespace SCIApp
 {
     internal class Connection
     {
-        private SqlConnection connection;
+        protected SqlConnection connection;
         private string _ConnectionString;
         public Connection()
         {
@@ -55,34 +56,6 @@ namespace SCIApp
             finally { connection.Close(); }
             return 0;
         }
-
-        public void InsertItem(Especie Item)
-        {
-            try
-            {
-                connection.Open();
-                SqlCommand sql = new SqlCommand("db_InsertItem", connection);
-                sql.CommandType = CommandType.StoredProcedure;
-                sql.Parameters.AddWithValue("@itemCode", Item.code);
-                sql.Parameters.AddWithValue("@detail", Item.detail);
-                sql.Parameters.AddWithValue("@marca", Item.brand);
-                sql.Parameters.AddWithValue("@model", Item.model);
-                sql.Parameters.AddWithValue("@qty", Item.quantity);
-                sql.Parameters.AddWithValue("@ubic", Item.location);
-                sql.Parameters.AddWithValue("@dep", Item.dependency);
-                sql.ExecuteNonQuery();
-                sql.Parameters.Clear();
-
-                MessageBox.Show("Especie ingresada con éxito", "Movimiento de Especie");
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error");
-            }
-            finally { connection.Close(); }
-        }
-
         public void getItems(DataGridView dg)
         {
             try
@@ -95,7 +68,7 @@ namespace SCIApp
                 dg.DataSource = dt;
 
             }
-            catch (Exception ex ) 
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }
@@ -141,5 +114,30 @@ namespace SCIApp
 
         }
 
+        public string find(string id)
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand sql = new SqlCommand("db_find_item", connection);
+                sql.CommandType = CommandType.StoredProcedure;
+                sql.Parameters.AddWithValue("@id", id);
+                SqlDataReader dr = sql.ExecuteReader();
+                if (dr.Read())
+                {
+                    return dr["detalle"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally { connection.Close(); }
+            return "";
+        }
+
+
     }
+
 }
+

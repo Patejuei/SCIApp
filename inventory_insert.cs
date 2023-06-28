@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SCIApp.Models;
 
 namespace SCIApp
 {
@@ -14,12 +15,11 @@ namespace SCIApp
     {
         Connection con = new Connection();
         Especie[] items = new Especie[0];
-        string[] dependencias = { "Sala de Estar", "Comedor", "Baños", "Cocina", "Bodega", "B-9"};
         DataGridView indexdg;
         public inventory_insert(DataGridView dg)
         {
             InitializeComponent();
-            cb_dependency.Items.AddRange(dependencias);
+            cb_dependency.Items.AddRange(Locations._dependencias);
             indexdg= dg;
 
         }
@@ -71,7 +71,7 @@ namespace SCIApp
         {
             foreach (Especie item in items)
             {
-                con.InsertItem(item);
+                item.InsertItem();
             }
         }
 
@@ -79,6 +79,11 @@ namespace SCIApp
         {
             con.getItems(indexdg);
             this.Close();
+        }
+
+        private void inventory_insert_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            con.getItems(indexdg);
         }
     }
 }

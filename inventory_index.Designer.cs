@@ -133,6 +133,7 @@
             this.btn_editItem.TabIndex = 3;
             this.btn_editItem.Text = "Modificar Especie";
             this.btn_editItem.UseVisualStyleBackColor = true;
+            this.btn_editItem.Click += new System.EventHandler(this.btn_editItem_Click);
             // 
             // btn_genPlanilla
             // 
@@ -192,6 +193,7 @@
             this.tbl_items.ShowEditingIcon = false;
             this.tbl_items.Size = new System.Drawing.Size(761, 375);
             this.tbl_items.TabIndex = 5;
+            this.tbl_items.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tbl_items_CellClick);
             // 
             // inventory_index
             // 

@@ -45,6 +45,7 @@
             this.inp_itemCode = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btn_back = new System.Windows.Forms.Button();
             this.btn_InsertAll = new System.Windows.Forms.Button();
             this.tbl_ItemList = new System.Windows.Forms.DataGridView();
             this.iCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,7 +55,6 @@
             this.iQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iDep = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iLoc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btn_back = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbl_ItemList)).BeginInit();
@@ -221,6 +221,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Acciones";
             // 
+            // btn_back
+            // 
+            this.btn_back.Location = new System.Drawing.Point(6, 61);
+            this.btn_back.Name = "btn_back";
+            this.btn_back.Size = new System.Drawing.Size(170, 29);
+            this.btn_back.TabIndex = 1;
+            this.btn_back.Text = "Volver";
+            this.btn_back.UseVisualStyleBackColor = true;
+            this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
+            // 
             // btn_InsertAll
             // 
             this.btn_InsertAll.Location = new System.Drawing.Point(6, 26);
@@ -314,16 +324,6 @@
             this.iLoc.Name = "iLoc";
             this.iLoc.ReadOnly = true;
             // 
-            // btn_back
-            // 
-            this.btn_back.Location = new System.Drawing.Point(6, 61);
-            this.btn_back.Name = "btn_back";
-            this.btn_back.Size = new System.Drawing.Size(170, 29);
-            this.btn_back.TabIndex = 1;
-            this.btn_back.Text = "Volver";
-            this.btn_back.UseVisualStyleBackColor = true;
-            this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
-            // 
             // inventory_insert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -334,6 +334,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "inventory_insert";
             this.Text = "Insertar Especie";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.inventory_insert_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
