@@ -114,7 +114,7 @@ namespace SCIApp
 
         }
 
-        public string find(string id)
+        public SqlDataReader find(string id)
         {
             try
             {
@@ -125,15 +125,15 @@ namespace SCIApp
                 SqlDataReader dr = sql.ExecuteReader();
                 if (dr.Read())
                 {
-                    return dr["detalle"].ToString();
+                    return dr;
                 }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                MessageBox.Show(ex.Message, "error");
             }
             finally { connection.Close(); }
-            return "";
+            return null;
         }
 
 

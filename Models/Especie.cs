@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.Data.SqlClient;
 
 namespace SCIApp.Models
@@ -21,7 +22,20 @@ namespace SCIApp.Models
         public Especie(string code)
         {
             this.code = code;
-
+            connection.Open();
+            SqlCommand sql = new SqlCommand("db_find_item", connection);
+            sql.CommandType = CommandType.StoredProcedure;
+            sql.Parameters.AddWithValue("@id", code);
+            SqlDataReader dr = sql.ExecuteReader();
+            if (dr.Read())
+            {
+                this.detail = dr["detalle"].ToString();
+                this.brand = dr["marca"].ToString();
+                this.model = dr["modelo"].ToString();
+                this.quantity = int.Parse(dr["cantidad"].ToString());
+                this.location = dr["ubicación"].ToString();
+                this.dependency = dr["dependencia"].ToString();
+            }
         }
 
         public Especie(string code, string detail, string quantity, string location, string dependency)
