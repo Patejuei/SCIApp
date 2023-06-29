@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using Microsoft.Data.SqlClient;
 
 namespace SCIApp.Models
 {
@@ -36,6 +30,7 @@ namespace SCIApp.Models
                 this.location = dr["ubicación"].ToString();
                 this.dependency = dr["dependencia"].ToString();
             }
+            connection.Close();
         }
 
         public Especie(string code, string detail, string quantity, string location, string dependency)
@@ -85,6 +80,53 @@ namespace SCIApp.Models
 
                 MessageBox.Show("Especie ingresada con éxito", "Movimiento de Especie");
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+            finally { connection.Close(); }
+        }
+
+        public void UpdateItem()
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand sql = new SqlCommand("db_editItem", connection);
+                sql.CommandType = CommandType.StoredProcedure;
+                sql.Parameters.AddWithValue("@id", code);
+                sql.Parameters.AddWithValue("@location", location);
+                sql.Parameters.AddWithValue("@dependency", dependency);
+                sql.Parameters.AddWithValue("@quantity", quantity);
+                sql.ExecuteNonQuery();
+                sql.Parameters.Clear();
+
+                MessageBox.Show("Especie modificada con éxito", "Movimiento de Especie");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+            finally { connection.Close(); }
+        }
+
+        public void set_quantity(string qty)
+        {
+            quantity = Filter_Int(qty);
+        }
+
+        public void DeleteItem()
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand sql = new SqlCommand("db_deleteItem", connection);
+                sql.CommandType = CommandType.StoredProcedure;
+                sql.Parameters.AddWithValue("@id", code);
+                sql.ExecuteNonQuery();
+                sql.Parameters.Clear();
+                MessageBox.Show("Especie Eliminada con éxito", "Movimiento de Especie");
             }
             catch (Exception ex)
             {

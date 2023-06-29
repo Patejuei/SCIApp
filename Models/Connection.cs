@@ -114,29 +114,6 @@ namespace SCIApp
 
         }
 
-        public SqlDataReader find(string id)
-        {
-            try
-            {
-                connection.Open();
-                SqlCommand sql = new SqlCommand("db_find_item", connection);
-                sql.CommandType = CommandType.StoredProcedure;
-                sql.Parameters.AddWithValue("@id", id);
-                SqlDataReader dr = sql.ExecuteReader();
-                if (dr.Read())
-                {
-                    return dr;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "error");
-            }
-            finally { connection.Close(); }
-            return null;
-        }
-
-
     }
 
 }

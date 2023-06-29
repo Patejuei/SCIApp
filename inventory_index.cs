@@ -87,7 +87,7 @@ namespace SCIApp
 
         private void btn_editItem_Click(object sender, EventArgs e)
         {
-            inventory_modify win = new inventory_modify(item_code);
+            inventory_modify win = new inventory_modify(item_code, tbl_items);
             win.ShowDialog();
         }
     }
